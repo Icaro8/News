@@ -3,13 +3,19 @@ import GoogleLogin from "react-google-login";
 
 import { Container } from "./styles";
 import { useUser } from "../../context/useUser";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export function LoginButton() {
+  const location = useLocation();
+  const navigate = useNavigate();
   const { userLocal } = useUser();
   function responseGoogle(data) {
     if (data) {
       localStorage.setItem("IcaroNews", data?.tokenId);
       userLocal();
+      if (location.pathname === "/") {
+        navigate("/home");
+      }
     }
   }
   return (

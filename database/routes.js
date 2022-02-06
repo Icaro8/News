@@ -1,18 +1,16 @@
 require("dotenv").config();
 const express = require("express");
-const cors = require("cors");
-const app = express();
-const connectToDataBase = require("./database");
-const userSchema = require("./schemas/user.schema");
-const port = 8080;
+const { Routes } = require("react-router-dom");
+const route = express.Router();
+const PostController = require("./controllers/posts.controller");
+const PostMiddleware = require("./middlewares/post.middleware");
 
-connectToDataBase();
-app.use(cors());
-app.use(express.json());
+route.get("/", (req, res) => res.json({ Icaro: "Lindo" }));
 
-app.get("/", (req, res) => res.json({ Icaro: "Lindo" }));
-app.post("/user", userSchema);
+route.get("/posts", PostController.index);
 
-app.listen(port, () => {
-  console.log(`Servidor rodando na porta 8080 🤧 `);
-});
+route.post("/posts", PostController.store);
+
+route.put("/post/:id", PostMiddleware.validateId, PostController.update);
+
+module.exports = route;
