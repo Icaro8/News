@@ -4,6 +4,8 @@ const UserProvider = createContext();
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
+  const [openModal, setOpenModal] = useState(false);
+
   async function userLocal() {
     const local = await localStorage.getItem("IcaroNews");
     const { email, name, picture } = await jwt_decode(local);
@@ -11,7 +13,9 @@ export function AuthProvider({ children }) {
     console.log(user);
   }
   return (
-    <UserProvider.Provider value={{ user, setUser, userLocal }}>
+    <UserProvider.Provider
+      value={{ user, setUser, userLocal, setOpenModal, openModal }}
+    >
       {children}
     </UserProvider.Provider>
   );

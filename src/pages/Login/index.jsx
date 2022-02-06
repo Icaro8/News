@@ -9,6 +9,7 @@ export function LoginPage() {
   const navigate = useNavigate();
   function handleClick() {
     toast.warn("Sua imersão será limitada 😢 ");
+    navigate("/home");
   }
 
   return (

@@ -3,11 +3,15 @@ import GoogleLogout from "react-google-login";
 import { useNavigate } from "react-router-dom";
 
 import { Container } from "./styles";
-
+import { useUser } from "../../context/useUser";
 export function ButtonSignOut() {
+  const { setOpenModal } = useUser();
   const navigate = useNavigate();
   function responseGoogle() {
-    navigate("/");
+    navigate("/home");
+    localStorage.removeItem("IcaroNews");
+    setOpenModal(false);
+    window.location.reload();
   }
   return (
     <Container>
